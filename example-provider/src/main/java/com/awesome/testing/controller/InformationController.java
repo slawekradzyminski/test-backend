@@ -48,7 +48,7 @@ public class InformationController {
         return returnResultFromOptional(information);
     }
 
-    @ApiOperation(hidden = true, value = "Select All")
+    @ApiOperation(hidden = true, value = "Get by name")
     @GetMapping(value = "/information", params = "name")
     public ResponseEntity<?> informationByName(@RequestParam(value = "name") String name) {
         Optional<Information> information = informationService.getInformationByName(name);
