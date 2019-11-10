@@ -44,7 +44,7 @@ subprojects {
 
 }
 
-project(':example-provider') {
+project(':vistula-api') {
 
     buildscript {
         repositories {
