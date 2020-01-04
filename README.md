@@ -2,6 +2,6 @@
 
 `./gradlew bootJar`
 
-`cd vistula-api/build/libs`
+`cd build/libs`
 
-`java -jar vistula-api.jar`
+`java -jar vistulasampleapi.jar`
