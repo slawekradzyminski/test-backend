@@ -1,7 +1,5 @@
 # Build and run
 
-`./gradlew bootJar`
+`mvn clean package spring-boot:repackage`
 
-`cd build/libs`
-
-`java -jar vistulasampleapi.jar`
+`java -jar target/vistulasampleapi-1.0.0-SNAPSHOT.jar`
