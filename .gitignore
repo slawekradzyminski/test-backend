@@ -4,3 +4,26 @@ target
 *.iml
 .pid.lock
 
+react/node_modules
+react/.pnp
+react/.pnp.js
+
+# testing
+react/coverage
+
+react/package-lock.json
+
+# production
+/build
+
+# misc
+react/.env.local
+react/.env.development.local
+react/.env.test.local
+react/.env.production.local
+
+react/npm-debug.log*
+react/yarn-debug.log*
+react/yarn-error.log*
+
+
