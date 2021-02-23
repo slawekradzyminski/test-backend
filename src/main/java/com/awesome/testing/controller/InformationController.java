@@ -45,14 +45,16 @@ public class InformationController {
     @GetMapping("/information/{id}")
     public ResponseEntity<?> getInformationById(@PathVariable long id) {
         Optional<Information> information = informationService.getInformationById(id);
-        return returnResultFromOptional(information);
+        return information.map(this::getBody)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
     @ApiOperation(hidden = true, value = "Get by name")
     @GetMapping(value = "/information", params = "name")
     public ResponseEntity<?> informationByName(@RequestParam(value = "name") String name) {
         Optional<Information> information = informationService.getInformationByName(name);
-        return returnResultFromOptional(information);
+        return information.map(this::getBody)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
     }
 
     @PostMapping(path = "/information", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -105,6 +107,12 @@ public class InformationController {
         return ResponseEntity.ok().body(updated);
     }
 
+    private ResponseEntity<Information> getBody(Information it) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(it);
+    }
+
     private ResponseEntity<?> handleWrongParamNamesError() {
         String errorBody = "You have requested parameter that does not exist in Information DTO";
         return ResponseEntity.badRequest().body(errorBody);
@@ -123,14 +131,5 @@ public class InformationController {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorBody);
     }
 
-    private ResponseEntity<?> returnResultFromOptional(Optional<Information> information) {
-        if (information.isPresent()) {
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(information);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
 }
 

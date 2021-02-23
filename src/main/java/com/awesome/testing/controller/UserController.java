@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     private final UserService userService;
@@ -31,36 +29,23 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         User saved = userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @GetMapping
     public ResponseEntity<?> listUser() {
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(userService.getAllUser());
+        return ResponseEntity.ok(userService.getAllUser());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable long id) {
-        Optional<User> user = userService.getUserById(id);
-        if (user.isPresent()) {
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody User user) {
-        if (!userService.getUserById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
         user.setId(id);
         saveUser(user);
         return ResponseEntity.ok(user);
