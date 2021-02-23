@@ -5,9 +5,11 @@ import com.awesome.testing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Service
 public class UserService {
@@ -20,9 +22,8 @@ public class UserService {
     }
 
     public List<User> getAllUser() {
-        List<User> Users = new ArrayList<>();
-        userRepository.findAll().forEach(Users::add);
-        return Users;
+        return stream(userRepository.findAll().spliterator(), false)
+                .collect(toList());
     }
 
     public Optional<User> getUserById(long id) {

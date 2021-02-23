@@ -5,9 +5,11 @@ import com.awesome.testing.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Service
 public class PetService {
@@ -20,9 +22,8 @@ public class PetService {
     }
 
     public List<Pet> getAllPets() {
-        List<Pet> informations = new ArrayList<>();
-        petRepository.findAll().forEach(informations::add);
-        return informations;
+        return stream(petRepository.findAll().spliterator(), false)
+                .collect(toList());
     }
 
     public Pet save(Pet pet) {

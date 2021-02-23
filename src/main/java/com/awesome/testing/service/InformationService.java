@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.awesome.testing.dto.Information;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Service
 public class InformationService {
@@ -20,9 +22,8 @@ public class InformationService {
     }
 
     public List<Information> getAllInformation() {
-        List<Information> informations = new ArrayList<>();
-        informationRepository.findAll().forEach(informations::add);
-        return informations;
+        return stream(informationRepository.findAll().spliterator(), false)
+                .collect(toList());
     }
 
     public Optional<Information> getInformationById(long id) {

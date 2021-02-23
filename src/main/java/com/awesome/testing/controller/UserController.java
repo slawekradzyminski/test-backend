@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveUser(@RequestBody User user){
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
         User saved = userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -37,14 +37,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listUser(){
+    public ResponseEntity<?> listUser() {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getAllUser());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable long id){
+    public ResponseEntity<?> getOne(@PathVariable long id) {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) {
             return ResponseEntity.ok()

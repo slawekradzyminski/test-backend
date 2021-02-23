@@ -129,7 +129,7 @@ public class InformationController {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(information);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
