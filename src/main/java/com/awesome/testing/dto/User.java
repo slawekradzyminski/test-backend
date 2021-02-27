@@ -1,5 +1,6 @@
 package com.awesome.testing.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,7 @@ public class User {
     private int salary;
     private int age;
 
+    @Builder
     public User(String firstName, String lastName, String userName, int salary, int age) {
         this.firstName = firstName;
         this.lastName = lastName;

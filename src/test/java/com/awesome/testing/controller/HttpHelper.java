@@ -12,28 +12,27 @@ public abstract class HttpHelper {
     @Autowired
     protected TestRestTemplate restTemplate;
 
-    protected <T> ResponseEntity<T> executeGet(String url, Class<T> responseType, Object... urlVariables) {
-        return execute(HttpMethod.GET, url, null, responseType, urlVariables);
+    protected <T> ResponseEntity<T> executeGet(String url, Class<T> responseType) {
+        return execute(HttpMethod.GET, url, null, responseType);
     }
 
-    protected <T, V> ResponseEntity<T> executePut(String url, V body, Class<T> responseType, Object... urlVariables) {
-        return execute(HttpMethod.PUT, url, body, responseType, urlVariables);
+    protected void executePut(String url, Object body) {
+        execute(HttpMethod.PUT, url,  body, Object.class);
     }
 
-    protected <T> ResponseEntity<T> executeDelete(String url, Class<T> responseType, Object... urlVariables) {
-        return execute(HttpMethod.DELETE, url, null, responseType, urlVariables);
+    protected void executeDelete(String url) {
+        execute(HttpMethod.DELETE, url, null, Object.class);
     }
 
-    protected <T, V> ResponseEntity<T> executePost(String url, V body, Class<T> responseType, Object... urlVariables) {
-        return execute(HttpMethod.POST, url, body, responseType, urlVariables);
+    protected <T, V> ResponseEntity<T> executePost(String url, V body, Class<T> responseType) {
+        return execute(HttpMethod.POST, url, body, responseType);
     }
 
-    private <T, V> ResponseEntity<T> execute(HttpMethod httpMethod, String url, V body, Class<T> responseType, Object[] urlVariables) {
+    private <T, V> ResponseEntity<T> execute(HttpMethod httpMethod, String url, V body, Class<T> responseType) {
         return restTemplate.exchange(url,
                 httpMethod,
                 new HttpEntity<>(body, getRequiredHeaders()),
-                responseType,
-                urlVariables);
+                responseType);
     }
 
     protected static HttpHeaders getRequiredHeaders() {
