@@ -67,7 +67,6 @@ public class UserControllerTest extends HttpHelper {
         assertThat(userGotById.getBody().getAge()).isEqualTo(31);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void shouldGetAllUsers() {
         ResponseEntity<User[]> users = getAllUsers();
