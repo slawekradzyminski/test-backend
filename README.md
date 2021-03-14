@@ -1,6 +1,8 @@
 # Build and run
 
-`mvn clean package spring-boot:repackage`
+`./mvnw clean package spring-boot:repackage` - linux, mac
+
+`./mvnw.cmd clean package spring-boot:repackage` - windows
 
 `java -jar target/cantestit-backend-1.0.0-SNAPSHOT.jar`
 
