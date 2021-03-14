@@ -1,5 +1,6 @@
 package com.awesome.testing.service;
 
+import com.awesome.testing.dto.LoginDto;
 import com.awesome.testing.dto.User;
 import com.awesome.testing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,18 @@ public class UserService {
 
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    public boolean userAlreadyExists(String username) {
+        return getAllUser().stream()
+                .anyMatch(user -> user.getUsername().equals(username));
+    }
+
+    public Optional<User> authenticate(LoginDto loginDto) {
+        return getAllUser().stream()
+                .filter(user -> user.getUsername().equals(loginDto.getUsername()))
+                .filter(user -> user.getPassword().equals(loginDto.getPassword()))
+                .findFirst();
     }
 
 }

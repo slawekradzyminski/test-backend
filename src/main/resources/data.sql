@@ -6,11 +6,10 @@ CREATE TABLE users (
   id IDENTITY PRIMARY KEY,
   firstName VARCHAR(250) NOT NULL,
   lastName VARCHAR(250) NOT NULL,
-  userName VARCHAR(250),
-  salary INTEGER,
-  age INTEGER
+  userName VARCHAR(250) NOT NULL,
+  password VARCHAR(250) NOT NULL
 );
 
-INSERT INTO users (id, firstName, lastName, userName, salary, age) VALUES
-    (1, 'Slawomir', 'Radzyminski', 'slawenty', 666, 66),
-    (2, 'Gosia', 'Nowak', 'gosianowak123', 999, 33);
+INSERT INTO users (id, firstName, lastName, userName, password) VALUES
+    (1, 'Slawomir', 'Radzyminski', 'slawenty', 'password'),
+    (2, 'Gosia', 'Nowak', 'gosianowak123', 'password');

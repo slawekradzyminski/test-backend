@@ -25,9 +25,8 @@ public class UserControllerTest extends HttpHelper {
         User user = User.builder()
                 .firstName("Slawek")
                 .lastName("Radzyminski")
-                .userName("slawekradz")
-                .salary(666)
-                .age(30)
+                .username("slawekradz")
+                .password("password")
                 .build();
 
         ResponseEntity<User> userCreated = executePost("/users", user, User.class);
@@ -36,7 +35,7 @@ public class UserControllerTest extends HttpHelper {
 
         ResponseEntity<User> userGotById = getUserById(createdUserId);
         assertThat(userGotById.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(userGotById.getBody().getAge()).isEqualTo(30);
+        assertThat(userGotById.getBody().getPassword()).isEqualTo("password");
     }
 
     @Test
@@ -44,9 +43,8 @@ public class UserControllerTest extends HttpHelper {
         User user = User.builder()
                 .firstName("Slawek")
                 .lastName("Radzyminski")
-                .userName("slawekradz")
-                .salary(666)
-                .age(30)
+                .username("slawekradz")
+                .password("password")
                 .build();
 
         ResponseEntity<User> userCreated = executePost("/users", user, User.class);
@@ -55,16 +53,15 @@ public class UserControllerTest extends HttpHelper {
         User updatedUser = User.builder()
                 .firstName("Slawek")
                 .lastName("Radzyminski")
-                .userName("slawekradzy")
-                .salary(666)
-                .age(31)
+                .username("slawekradz")
+                .password("password2")
                 .build();
 
         executePut("/users/" + createdUserId, updatedUser);
 
         ResponseEntity<User> userGotById = getUserById(createdUserId);
         assertThat(userGotById.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(userGotById.getBody().getAge()).isEqualTo(31);
+        assertThat(userGotById.getBody().getPassword()).isEqualTo("password2");
     }
 
     @Test
