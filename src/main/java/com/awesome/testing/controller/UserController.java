@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listUser() {
+    public ResponseEntity<?> listUsers() {
         return ResponseEntity.ok(userService.getAllUser());
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody User user) {
         user.setId(id);
         userService.save(user);
         return ResponseEntity.ok(user);

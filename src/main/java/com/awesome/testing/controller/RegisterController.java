@@ -20,7 +20,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.userAlreadyExists(user.getUsername())) {
             return ResponseEntity.badRequest().body(new ErrorDto("User already exists"));
         }

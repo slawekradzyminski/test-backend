@@ -24,7 +24,7 @@ public class AuthenticateController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveUser(@RequestBody LoginDto loginCredentials) {
+    public ResponseEntity<?> loginUser(@RequestBody LoginDto loginCredentials) {
         Optional<User> optionalUser = userService.authenticate(loginCredentials);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
