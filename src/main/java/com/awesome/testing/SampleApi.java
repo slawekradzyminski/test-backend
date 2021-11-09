@@ -1,5 +1,9 @@
 package com.awesome.testing;
 
+import com.awesome.testing.dto.User;
+import com.awesome.testing.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +18,14 @@ import static org.zalando.logbook.HeaderFilter.none;
 
 @EnableSwagger2
 @SpringBootApplication
+@RequiredArgsConstructor
 public class SampleApi {
+
+    private final UserRepository userRepository;
 
     @Bean
     public Docket swagger() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.awesome.testing.controller"))
                 .paths(PathSelectors.any())
@@ -28,6 +35,14 @@ public class SampleApi {
     @Bean
     public HeaderFilter headerFilter() {
         return none();
+    }
+
+    @Bean
+    InitializingBean sendDatabase() {
+        return () -> {
+            userRepository.save(new User("Slawomir", "Radzyminski", "slawenty", "password"));
+            userRepository.save(new User("Gosia", "Nowak", "gosianowak123", "password"));
+        };
     }
 
     public static void main(String[] args) {
